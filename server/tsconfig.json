@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        // Module resolution and path aliases
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            // "@utilities/*": ["src/utilities/*"],
+            // "@configs/*": ["src/configs/*"],
+            // "@db/*": ["src/db/*"],
+            // "@routes/*": ["src/routes/*"],
+            // "@custom/*": ["src/custom/*"],
+            // "@middleware/*": ["src/middleware/*"],
+            // "@schema/*": ["src/schema/*"],
+        },
+        // Target and module system
+        "target": "ES2022",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        // Source code and ouput code
+        "rootDir": "src",
+        "outDir": "dist",
+        // Strictness and type checking
+        "strict": true,
+        "strictNullChecks": true, 
+        "useUnknownInCatchVariables": true,
+        // Allow default imports from modules with no default export
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        // Prevent checking of declaration files or node_modules
+        "skipLibCheck": true,
+        
+        "resolveJsonModule": true,
+        // Linting options
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "noEmitOnError": true,
+        "sourceMap": true,
+        
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
+}
