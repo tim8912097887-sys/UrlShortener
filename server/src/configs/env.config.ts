@@ -1,0 +1,27 @@
+import z from "zod";
+
+const NODE_Type = ["development","production","test"] as const;
+
+const envSchema = z.object({
+    PORT: z.string("Port must be a string").nonempty("Port can't be empty"),
+    MONGO_URI: z.string("Uri must be a string").nonempty("Uri can't be empty"),
+    NODE_ENV: z.enum(NODE_Type,`NODE_ENV must be development,production or test`),
+    SALT_ROUNDS: z.string("Salt rounds must be a string").nonempty("Salt rounds can't be empty"),
+    // REFRESH_TOKEN_SECRET: z.string("Secret must be a string").nonempty("Secret can't be empty"),
+    // ACCESS_TOKEN_SECRET: z.string("Secret must be a string").nonempty("Secret can't be empty"),
+    // REFRESH_TOKEN_EXPIRED: z.string("Expired Time must be a string").nonempty("Expired Time can't be empty"),
+    // ACCESS_TOKEN_EXPIRED: z.string("Expired Time must be a string").nonempty("Expired Time can't be empty"),
+    // ATTEMPT_TIME: z.string("Attempt Time must be a string").nonempty("Attempt Time can't be empty"),
+    // ACCOUNT_LOCK_TIME: z.string("Account Lock Time must be a string").nonempty("Account Lock Time can't be empty"),
+    // REDIS_HOST: z.string("Redis host must be a string").nonempty("Redis host can't be empty"),
+    // REDIS_PORT: z.string("Redis port must be a string").nonempty("Redis port can't be empty"),
+    // REDIS_PASSWORD: z.string("Redis password must be a string").nonempty("Redis password can't be empty"),
+    // LOGIN_WINDOW_FRAME: z.string("Login window frame must be a string").nonempty("Login window frame can't be empty"),
+    // LOGIN_WINDOW_TIMES: z.string("Login window times must be a string").nonempty("Login window times can't be empty")
+})
+
+const result = envSchema.safeParse(process.env);
+// Throw error if env missing
+if(!result.success) throw new Error(result.error.issues[0].message);
+// Get type after safe parse
+export const env = result.data;
