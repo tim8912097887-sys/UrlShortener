@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import { errorHandler } from '@shared/middlewares/errorHandler.js';
 import { notFoundHandler } from '@shared/middlewares/notFound.js';
+import { v1Router } from "@routes/v1/index.js";
 
 export const app = express();
 
@@ -11,6 +12,9 @@ app.use(express.json());
 app.use(cookieParser());
 // HTTP request logger middleware
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+
+// API routes
+app.use("/api/v1",v1Router);
 // Healthy check endpoint
 app.get('/health', (_, res) => {
   res.send('OK');
