@@ -1,10 +1,10 @@
-import { ServerConflictError } from "@customs/error/serverconflict.js";
+import { ServerConflictError } from "@shared/error/serverConflict.js";
 import { env } from "@configs/env.config.js";
 import { comparePassword, hashPassword } from "@utilities/password.js";
 import mongoose from "mongoose";
 import v from "validator";
-import { BadRequestError } from "@/customs/error/badrequest.js";
-import { ServerError } from "@/customs/error/server.js";
+import { BadRequestError } from "@shared/error/badRequest.js";
+import { ServerError } from "@shared/error/server.js";
 import { logger } from "@/utilities/logger.js";
 
 const UserSchema = new mongoose.Schema({
@@ -89,7 +89,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', async function() {
     if (!this.isModified('password')) return;
-    const hashedPassword = await hashPassword(this.password, parseInt(env.SALT_ROUNDS));
+    const hashedPassword = await hashPassword(this.password,env.SALT_ROUNDS);
     this.password = hashedPassword;
     return;
 })

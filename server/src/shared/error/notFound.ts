@@ -1,4 +1,4 @@
-import { ApiError, ERROR_CODE, ERROR_TYPE } from "@customs/error/api.js";
+import { ApiError, ERROR_CODE, ERROR_TYPE } from "@/shared/error/api.js";
 
 export class NotFoundError extends ApiError {
     constructor(message: string) {
