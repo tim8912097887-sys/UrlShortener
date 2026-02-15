@@ -7,7 +7,22 @@ import { BadRequestError } from "@shared/error/badRequest.js";
 import { ServerError } from "@shared/error/server.js";
 import { logger } from "@/utilities/logger.js";
 
-const UserSchema = new mongoose.Schema({
+interface IUser extends mongoose.Document {
+    username: string
+    email: string
+    password: string
+    avatar: string
+    loginAttempts: number
+    loginUtils: number
+}
+
+interface IUserMethods {
+    comparePassword(password: string): Promise<boolean>;
+}
+
+type UserModelType = mongoose.Model<IUser, {}, IUserMethods>;
+
+const UserSchema = new mongoose.Schema<IUser, {}, IUserMethods>({
     username: {
         type: String,
         required: [true,"Username required"],
@@ -60,6 +75,7 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
         trim: true,
+        default: "https://static.vecteezy.com/system/resources/previews/036/280/651/original/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg",
         validate: {
             validator: (val: string) => {
                 return v.isURL(val);
@@ -132,4 +148,4 @@ UserSchema.post('save', function(error: any, _doc: any, _next: any) {
     throw new ServerError("An unexpected error occurred while saving the user.");
 });
 
-export const UserModel = mongoose.model("User",UserSchema);
+export const UserModel = mongoose.model<IUser,UserModelType>("User",UserSchema);

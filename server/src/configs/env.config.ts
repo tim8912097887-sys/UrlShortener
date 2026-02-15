@@ -12,10 +12,14 @@ const envSchema = z.object({
     SALT_ROUNDS: z.string("Salt rounds must be a string").regex(/^[0-9]+$/).transform((val) => parseInt(val,10)).refine((val) => !isNaN(val) && val > 0 && val < 100, {
         message: "Salt rounds must be a valid positive number less than 100"
     }),
-    // REFRESH_TOKEN_SECRET: z.string("Secret must be a string").nonempty("Secret can't be empty"),
-    // ACCESS_TOKEN_SECRET: z.string("Secret must be a string").nonempty("Secret can't be empty"),
-    // REFRESH_TOKEN_EXPIRED: z.string("Expired Time must be a string").nonempty("Expired Time can't be empty"),
-    // ACCESS_TOKEN_EXPIRED: z.string("Expired Time must be a string").nonempty("Expired Time can't be empty"),
+    REFRESH_TOKEN_SECRET: z.string("Secret must be a string").nonempty("Secret can't be empty"),
+    ACCESS_TOKEN_SECRET: z.string("Secret must be a string").nonempty("Secret can't be empty"),
+    REFRESH_TOKEN_EXPIRES_IN: z.string("Refresh token expires in must be a string").regex(/^[0-9]+$/).transform((val) => parseInt(val,10)).refine((val) => !isNaN(val) && val > 0, {
+        message: "Refresh token expires in must be a valid positive number"
+    }),
+    ACCESS_TOKEN_EXPIRES_IN: z.string("Access token expires in must be a string").regex(/^[0-9]+$/).transform((val) => parseInt(val,10)).refine((val) => !isNaN(val) && val > 0, {
+        message: "Access token expires in must be a valid positive number"
+    }),
     // ATTEMPT_TIME: z.string("Attempt Time must be a string").nonempty("Attempt Time can't be empty"),
     // ACCOUNT_LOCK_TIME: z.string("Account Lock Time must be a string").nonempty("Account Lock Time can't be empty"),
     // REDIS_HOST: z.string("Redis host must be a string").nonempty("Redis host can't be empty"),
